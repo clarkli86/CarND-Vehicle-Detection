@@ -109,7 +109,7 @@ Ultimately I searched on three scales using YCrCb 3-channel HOG features, which 
 ### Video Implementation
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./output_videos/project_video.mp4)
 
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
@@ -134,5 +134,12 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.
+The shortcomings in the current pipeline:
+1. The extracted HOG features lose lots of useful features of a CAR, e.g., shape of glass, mirror, tyres, lights and plates. This will likely create a lot of false positves.
+2. The result bounding boxes in final output are a bit wobbly.
+3. The bounding box could disappaer in several consectutive frames because of the scaling of sliding windows.
 
+To overcome these shortcomings I would like to the following approaches:
+1. Replace HOGS/SVM with CNN even YOLO. CNN is more powerful and promising to "learn" all the distinguishing features of cars like human eyes.
+2. Predict and average the bounding box position/size to make them more stable.
+3. When we have a high confidence that a car should be present in the frame but is not found, consider searching with more scales of sliding windows.
